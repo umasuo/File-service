@@ -42,11 +42,8 @@ group = 'umasuo'
 
 jar {
     baseName = 'file-service'
-    version =  '0.1.1'
+    version = '0.1.1'
 }
-
-// build docker image task
-apply from: '../docker_build.gradle'
 
 dependencies {
     // spring
@@ -89,6 +86,15 @@ dependencies {
     testCompile('org.spockframework:spock-spring:1.0-groovy-2.4')
 
 }
+
+// build docker image task
+apply from: '../docker_build.gradle'
+
+// Specify the gradle wrapper version, all use 3.0
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1'
+}
+
 
 mainClassName = 'com.umasuo.Application'
 
