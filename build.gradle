@@ -42,7 +42,7 @@ group = 'umasuo'
 
 jar {
     baseName = 'file-service'
-    version = '0.1.1'
+    version = '0.0.1'
 }
 
 dependencies {
@@ -88,7 +88,7 @@ dependencies {
 }
 
 // build docker image task
-apply from: '../docker_build.gradle'
+apply from: 'docker_build.gradle'
 
 // Specify the gradle wrapper version, all use 3.0
 task wrapper(type: Wrapper) {
