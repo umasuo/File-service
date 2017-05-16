@@ -1,0 +1,4 @@
+jar {
+    baseName = 'file-service'
+    version = '0.0.1'
+}
