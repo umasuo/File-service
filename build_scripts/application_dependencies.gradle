@@ -19,7 +19,11 @@ dependencies {
     // Common tool like: StringUtils
     compile('org.apache.commons:commons-lang3:3.4')
 
+    compile('com.google.api-client:google-api-client:1.22.0')
+
     // Lombok
     compile('org.projectlombok:lombok:1.16.12')
+
+    compile("com.umasuo:commons:0.0.1")
 
 }

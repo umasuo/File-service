@@ -1,5 +1,6 @@
-package com.umasuo;
+package com.umasuo.file;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Application {
 
-  @GetMapping("/test")
-  public String testApi() {
-    return "test";
+  @Value("${spring.application.name}")
+  private String serviceName;
+
+  @GetMapping("/")
+  public String getServiceName() {
+    return serviceName + " : " + System.currentTimeMillis();
   }
 
   public static void main(String[] args) {
