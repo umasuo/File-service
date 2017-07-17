@@ -5,5 +5,5 @@ package com.umasuo.file.infrastructure;
  */
 public class Router {
 
-  public static final String FILE_ROOT = "/files";
+  public static final String FILE_ROOT = "/v1/files";
 }
