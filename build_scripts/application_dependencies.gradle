@@ -22,7 +22,7 @@ dependencies {
     // Lombok
     compile('org.projectlombok:lombok:1.16.12')
 
-    compile('com.amazonaws:aws-java-sdk-s3:1.11.162')
+    compile('com.google.cloud:google-cloud-storage:1.2.1')
 
     compile("com.umasuo:commons:0.0.1")
 

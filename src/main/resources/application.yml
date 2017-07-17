@@ -23,5 +23,6 @@ jwt:
   secret: QWERTYUIOPASDFGHJKLZXCVBNM
   expires: 72000
 
-file:
-  root-path: http://localhost:8807
+gcloud:
+  storage:
+    bucket: test1231
