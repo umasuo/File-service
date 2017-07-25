@@ -6,7 +6,6 @@ import com.umasuo.file.domain.service.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,9 +23,6 @@ public class FileApplication {
   @Autowired
   private FileStorageService fileStorageService;
 
-  @Value("${gcloud.storage.bucket}")
-  private String bucketName;
-
   @Autowired
   private transient StorageApplication storageApplication;
 
@@ -36,9 +32,7 @@ public class FileApplication {
 
     String id = UUID.randomUUID().toString();
 
-    storageApplication.uploadFile(file, bucketName, id);
-
-    String publicLink = getPublicLink(bucketName, id);
+    String publicLink = storageApplication.uploadToAliyun(file, id);
 
     FileStorage fileStorage = new FileStorage();
     fileStorage.setId(id);
@@ -53,8 +47,5 @@ public class FileApplication {
     return publicLink;
   }
 
-  public static String getPublicLink(String bucket, String id) {
-    String publicLinkFormat = "https://storage.googleapis.com/%s/%s";
-    return String.format(publicLinkFormat, bucket, id);
-  }
+
 }

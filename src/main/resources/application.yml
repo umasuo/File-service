@@ -26,3 +26,10 @@ jwt:
 gcloud:
   storage:
     bucket: test1231
+
+aliyun:
+  storage:
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    bucket: bucket
+    accessKeyId: accessKeyId
+    accessKeySecret: accessKeySecret

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @SpringBootApplication
 @RestController
-@EnableAsync
 public class Application {
 
   @Value("${spring.application.name}")
