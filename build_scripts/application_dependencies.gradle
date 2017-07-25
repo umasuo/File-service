@@ -26,4 +26,5 @@ dependencies {
 
     compile("com.umasuo:commons:0.0.1")
 
+    compile("com.aliyun.oss:aliyun-sdk-oss:2.7.0")
 }
