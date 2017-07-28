@@ -23,9 +23,11 @@ jwt:
   secret: QWERTYUIOPASDFGHJKLZXCVBNM
   expires: 72000
 
+storage: gcloud
+
 gcloud:
   storage:
-    bucket: test1231
+    bucket: bucket
 
 aliyun:
   storage:

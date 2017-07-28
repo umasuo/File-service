@@ -6,6 +6,7 @@ import com.umasuo.file.domain.service.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,6 +25,7 @@ public class FileApplication {
   private FileStorageService fileStorageService;
 
   @Autowired
+  @Qualifier("${fileStorage}")
   private transient StorageApplication storageApplication;
 
   public String upload(MultipartFile file, String developerId, String userId)
@@ -32,7 +34,7 @@ public class FileApplication {
 
     String id = UUID.randomUUID().toString();
 
-    String publicLink = storageApplication.uploadToAliyun(file, id);
+    String publicLink = storageApplication.upload(file, id);
 
     FileStorage fileStorage = new FileStorage();
     fileStorage.setId(id);
@@ -46,6 +48,5 @@ public class FileApplication {
     logger.debug("Exit.");
     return publicLink;
   }
-
 
 }
