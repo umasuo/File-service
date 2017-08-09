@@ -1,7 +1,7 @@
 package com.umasuo.file.infrastructure.config;
 
 import com.umasuo.file.application.service.AliStorage;
-import com.umasuo.file.application.service.GcloudStorage;
+import com.umasuo.file.application.service.GoogleStorage;
 import com.umasuo.file.application.service.StorageApplication;
 
 import org.slf4j.Logger;
@@ -26,35 +26,58 @@ public class StorageFactory {
    * 目前支持gcloud和ali，分别表示google cloud storage和阿里云OSS
    */
   @Value("${storage}")
-  private String storage;
+  private transient String storage;
 
+  /**
+   * The endpoint for ali cloud.
+   */
   @Value("${aliyun.storage.endpoint}")
-  private String endpoint;
+  private transient String aliEndpoint;
 
+  /**
+   * The access key id for ali cloud.
+   */
   @Value("${aliyun.storage.accessKeyId}")
-  private String accessKeyId;
+  private transient String aliAccessKeyId;
 
+  /**
+   * The access key secret for ali cloud.
+   */
   @Value("${aliyun.storage.accessKeySecret}")
-  private String accessKeySecret;
+  private transient String aliAccessKeySecret;
 
+  /**
+   * The bucket name for ali cloud.
+   */
   @Value("${aliyun.storage.bucket}")
-  private String aliBucket;
+  private transient String aliBucket;
 
+  /**
+   * The bucket name for google cloud.
+   */
   @Value("${gcloud.storage.bucket}")
-  private String gcloudBucket;
+  private transient String gcloudBucket;
 
   /**
    * 根据配置生成不同的StorageApplication
    */
   @Bean("${fileStorage}")
   public StorageApplication getIStorage() {
+    StorageApplication storageApplication = null;
     switch (storage) {
       case "gcloud":
-        return new GcloudStorage(gcloudBucket);
+        LOG.info("Init Google cloud storage.");
+        storageApplication = new GoogleStorage(gcloudBucket);
+        break;
       case "ali":
-        return new AliStorage(endpoint, accessKeyId, accessKeySecret, aliBucket);
+        LOG.info("Init Ali cloud storage.");
+        storageApplication =
+            new AliStorage(aliEndpoint, aliAccessKeyId, aliAccessKeySecret, aliBucket);
+        break;
       default:
-        return null;
+        LOG.info("Config wrong, can not init storage application.");
+        break;
     }
+    return storageApplication;
   }
 }

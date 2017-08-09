@@ -13,24 +13,45 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.persistence.Transient;
+
 /**
  * Created by umasuo on 17/6/15.
  */
 @Service
 public class FileApplication {
 
-  private final static Logger logger = LoggerFactory.getLogger(FileApplication.class);
+  /**
+   * Log.
+   */
+  private final static Logger LOG = LoggerFactory.getLogger(FileApplication.class);
 
+  /**
+   * FileStorage Service.
+   */
   @Autowired
-  private FileStorageService fileStorageService;
+  private transient FileStorageService fileStorageService;
 
+  /**
+   * Storage Application, support Ali Cloud and Google Cloud.
+   */
   @Autowired
   @Qualifier("${fileStorage}")
   private transient StorageApplication storageApplication;
 
+  /**
+   * Upload file to cloud storage bucket, and save it's information into database.
+   *
+   * @param file the file
+   * @param developerId the developer id, required
+   * @param userId the user id, optional
+   * @return the public link for file
+   * @throws IOException exception when upload file to cloud storage bucket
+   */
+  @Transient
   public String upload(MultipartFile file, String developerId, String userId)
       throws IOException {
-    logger.debug("Enter. developerId: {}, userId: {}.", developerId, userId);
+    LOG.debug("Enter. developerId: {}, userId: {}.", developerId, userId);
 
     String id = UUID.randomUUID().toString();
 
@@ -45,8 +66,8 @@ public class FileApplication {
 
     fileStorageService.save(fileStorage);
 
-    logger.debug("Exit.");
+    LOG.debug("Exit. public link: {}.", publicLink);
+
     return publicLink;
   }
-
 }

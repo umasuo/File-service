@@ -17,26 +17,54 @@ public class AliStorage implements StorageApplication {
   /**
    * Logger.
    */
-  private static final Logger logger = LoggerFactory.getLogger(AliStorage.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AliStorage.class);
 
-  private String endpoint;
+  /**
+   * The endpoint.
+   */
+  private transient String endpoint;
 
-  private String accessKeyId;
+  /**
+   * The access key id.
+   */
+  private transient String accessKeyId;
 
-  private String accessKeySecret;
+  /**
+   * The access key secret.
+   */
+  private transient String accessKeySecret;
 
-  private String bucket;
+  /**
+   * The bucket name.
+   */
+  private transient String bucket;
 
-  public AliStorage(String endpoint, String accessKeyId, String accessKeySecret,
-      String bucket) {
+  /**
+   * Instantiates a new AliStorage.
+   *
+   * @param endpoint the endpoint
+   * @param accessKeyId the access key id
+   * @param accessKeySecret the access key secret
+   * @param bucket the bucket
+   */
+  public AliStorage(String endpoint, String accessKeyId, String accessKeySecret, String bucket) {
     this.endpoint = endpoint;
     this.accessKeyId = accessKeyId;
     this.accessKeySecret = accessKeySecret;
     this.bucket = bucket;
   }
 
+  /**
+   * Upload file to Ali cloud storage.
+   *
+   * @param file the file
+   * @param name the name
+   * @return public link for this file
+   * @throws IOException exception when upload file to cloud storage bucket
+   */
+  @Override
   public String upload(MultipartFile file, String name) throws IOException {
-    logger.debug("Enter.");
+    LOG.debug("Enter. file name: {}.", name);
 
     OSSClient client = new OSSClient(endpoint, accessKeyId, accessKeySecret);
 
@@ -44,10 +72,22 @@ public class AliStorage implements StorageApplication {
 
     client.shutdown();
 
-    return getPublicLink(bucket, endpoint, name);
+    String publicLink = getPublicLink(bucket, endpoint, name);
+
+    LOG.debug("Exit. public link: {}.", publicLink);
+
+    return publicLink;
   }
 
-  public static String getPublicLink(String bucket, String endpoint, String name) {
+  /**
+   * Get public link for file by it's name and ali cloud storage bucket name and endpoint.
+   *
+   * @param bucket the bucket name
+   * @param endpoint the endpoint
+   * @param name the file name
+   * @return public link in format: http://%s.%s/%s
+   */
+  private static String getPublicLink(String bucket, String endpoint, String name) {
     String publicLinkFormat = "http://%s.%s/%s";
     return String.format(publicLinkFormat, bucket, endpoint, name);
   }

@@ -18,28 +18,44 @@ import java.util.Arrays;
 /**
  * Created by Davis on 17/7/28.
  */
-public class GcloudStorage implements StorageApplication {
+public class GoogleStorage implements StorageApplication {
 
   /**
-   * Logger.
+   * Log.
    */
-  private static final Logger logger = LoggerFactory.getLogger(GcloudStorage.class);
+  private static final Logger LOG = LoggerFactory.getLogger(GoogleStorage.class);
 
-  private static Storage storage = null;
+  /**
+   * The google cloud storage.
+   */
+  private static Storage storage = StorageOptions.getDefaultInstance().getService();
 
-  static {
-    storage = StorageOptions.getDefaultInstance().getService();
-  }
+  /**
+   * The bucket name.
+   */
+  private transient String bucket;
 
-  private String bucket;
-
-  public GcloudStorage(String bucket) {
+  /**
+   * Instantiates a new Google storage.
+   *
+   * @param bucket the bucket name
+   */
+  public GoogleStorage(String bucket) {
     this.bucket = bucket;
   }
 
+  /**
+   * Upload file to google cloud storage.
+   *
+   * @param file the file
+   * @param name the name
+   * @return public link for this file
+   * @throws IOException exception when upload file
+   */
   @Override
   public String upload(MultipartFile file, String name) throws IOException {
-    logger.debug("Enter.");
+    LOG.debug("Enter. file name: {}.", name);
+
     BlobInfo blobInfo = BlobInfo.newBuilder(bucket, name)
         .setContentType(file.getContentType())
         .setAcl(new ArrayList<>(Arrays.asList(Acl.of(User.ofAllUsers(), Role.READER))))
@@ -47,10 +63,21 @@ public class GcloudStorage implements StorageApplication {
 
     // the inputstream is closed by default, so we don't need to close it here
     storage.create(blobInfo, file.getInputStream());
-    logger.debug("Exit.");
-    return getPublicLink(bucket, name);
+
+    String publicLink = getPublicLink(bucket, name);
+
+    LOG.debug("Exit. public link: {}.", publicLink);
+
+    return publicLink;
   }
 
+  /**
+   * Get public link for file by it's name and ali cloud storage bucket name and endpoint.
+   *
+   * @param bucket the bucket name
+   * @param name the file name
+   * @return public link in format: https://storage.googleapis.com/%s/%s
+   */
   private String getPublicLink(String bucket, String name) {
     String publicLinkFormat = "https://storage.googleapis.com/%s/%s";
     return String.format(publicLinkFormat, bucket, name);

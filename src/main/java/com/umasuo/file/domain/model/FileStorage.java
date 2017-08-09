@@ -14,13 +14,25 @@ import javax.persistence.Table;
 @Data
 public class FileStorage {
 
+  /**
+   * The id.
+   */
   @Id
   private String id;
 
+  /**
+   * The file name.
+   */
   private String fileName;
-  
+
+  /**
+   * The user id, optional.
+   */
   private String userId;
 
+  /**
+   * The developer id, required.
+   */
   private String developerId;
 
   /**
