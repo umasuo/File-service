@@ -1,4 +1,4 @@
-package com.umasuo.file.application.service;
+package com.umasuo.file.application.service.storage;
 
 import com.aliyun.oss.OSSClient;
 

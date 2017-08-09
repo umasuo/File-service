@@ -1,7 +1,7 @@
 package com.umasuo.file.domain.service;
 
-import com.umasuo.file.domain.model.FileStorage;
-import com.umasuo.file.infrastructure.repository.FileStorageRepository;
+import com.umasuo.file.domain.model.FileInformation;
+import com.umasuo.file.infrastructure.repository.FileInformationRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,18 +12,18 @@ import org.springframework.stereotype.Service;
  * Created by umasuo on 17/6/15.
  */
 @Service
-public class FileStorageService {
+public class FileInformationService {
 
   /**
    * Log.
    */
-  private final static Logger LOG = LoggerFactory.getLogger(FileStorageService.class);
+  private final static Logger LOG = LoggerFactory.getLogger(FileInformationService.class);
 
   /**
-   * FileStorage repository.
+   * FileInformation repository.
    */
   @Autowired
-  private transient FileStorageRepository repository;
+  private transient FileInformationRepository repository;
 
   /**
    * 保存文件的信息.
@@ -31,10 +31,10 @@ public class FileStorageService {
    * @param fileStorage 文件信息
    * @return 存储的信息
    */
-  public FileStorage save(FileStorage fileStorage) {
+  public FileInformation save(FileInformation fileStorage) {
     LOG.debug("Enter. fileStorage: {}.", fileStorage);
 
-    FileStorage file = repository.save(fileStorage);
+    FileInformation file = repository.save(fileStorage);
 
     LOG.debug("Exit. fileStorage: {}.", file);
     return file;

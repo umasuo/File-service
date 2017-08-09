@@ -1,8 +1,8 @@
 package com.umasuo.file.infrastructure.config;
 
-import com.umasuo.file.application.service.AliStorage;
-import com.umasuo.file.application.service.GoogleStorage;
-import com.umasuo.file.application.service.StorageApplication;
+import com.umasuo.file.application.service.storage.AliStorage;
+import com.umasuo.file.application.service.storage.GoogleStorage;
+import com.umasuo.file.application.service.storage.StorageApplication;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 public class StorageFactory {
 
   /**
-   * Logger.
+   * Log.
    */
   private static final Logger LOG = LoggerFactory.getLogger(StorageFactory.class);
 
@@ -62,7 +62,7 @@ public class StorageFactory {
    * 根据配置生成不同的StorageApplication
    */
   @Bean("${fileStorage}")
-  public StorageApplication getIStorage() {
+  public StorageApplication getStorage() {
     StorageApplication storageApplication = null;
     switch (storage) {
       case "gcloud":

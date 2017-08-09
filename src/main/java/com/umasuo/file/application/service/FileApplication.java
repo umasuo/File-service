@@ -1,7 +1,8 @@
 package com.umasuo.file.application.service;
 
-import com.umasuo.file.domain.model.FileStorage;
-import com.umasuo.file.domain.service.FileStorageService;
+import com.umasuo.file.application.service.storage.StorageApplication;
+import com.umasuo.file.domain.model.FileInformation;
+import com.umasuo.file.domain.service.FileInformationService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +28,10 @@ public class FileApplication {
   private final static Logger LOG = LoggerFactory.getLogger(FileApplication.class);
 
   /**
-   * FileStorage Service.
+   * FileInformation Service.
    */
   @Autowired
-  private transient FileStorageService fileStorageService;
+  private transient FileInformationService fileInformationService;
 
   /**
    * Storage Application, support Ali Cloud and Google Cloud.
@@ -57,14 +58,10 @@ public class FileApplication {
 
     String publicLink = storageApplication.upload(file, id);
 
-    FileStorage fileStorage = new FileStorage();
-    fileStorage.setId(id);
-    fileStorage.setFileName(file.getOriginalFilename());
-    fileStorage.setDeveloperId(developerId);
-    fileStorage.setUserId(userId);
-    fileStorage.setFileUrl(publicLink);
+    FileInformation fileStorage =
+        FileInformation.build(file.getOriginalFilename(), developerId, userId, id, publicLink);
 
-    fileStorageService.save(fileStorage);
+    fileInformationService.save(fileStorage);
 
     LOG.debug("Exit. public link: {}.", publicLink);
 

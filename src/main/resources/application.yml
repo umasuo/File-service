@@ -19,10 +19,6 @@ spring:
       max-file-size: 1MB
       max-request-size: 1MB
 
-jwt:
-  secret: QWERTYUIOPASDFGHJKLZXCVBNM
-  expires: 72000
-
 storage: gcloud
 
 gcloud:
