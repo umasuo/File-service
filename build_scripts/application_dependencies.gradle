@@ -24,7 +24,7 @@ dependencies {
 
     compile('com.google.cloud:google-cloud-storage:1.2.1')
 
-    compile("com.umasuo:commons:0.0.1")
+    compile("com.umasuo:commons:0.2")
 
     compile("com.aliyun.oss:aliyun-sdk-oss:2.7.0")
 }
