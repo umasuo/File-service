@@ -58,10 +58,14 @@ public class FileApplication {
 
     String publicLink = storageApplication.upload(file, id);
 
-    FileInformation fileStorage =
-        FileInformation.build(file.getOriginalFilename(), developerId, userId, id, publicLink);
+    FileInformation fileInformation = new FileInformation();
+    fileInformation.setId(id);
+    fileInformation.setFileName(file.getOriginalFilename());
+    fileInformation.setDeveloperId(developerId);
+    fileInformation.setUserId(userId);
+    fileInformation.setFileUrl(publicLink);
 
-    fileInformationService.save(fileStorage);
+    fileInformationService.save(fileInformation);
 
     LOG.debug("Exit. public link: {}.", publicLink);
 

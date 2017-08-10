@@ -39,25 +39,4 @@ public class FileInformation {
    * 文件的路径，如果采用外部存储，例如S3，那么则保存其生成的URL.
    */
   private String fileUrl;
-
-  /**
-   * Build file information.
-   *
-   * @param originalFilename the original filename
-   * @param developerId the developer id
-   * @param userId the user id
-   * @param id the id
-   * @param publicLink the public link
-   * @return file information
-   */
-  public static FileInformation build(String originalFilename, String developerId, String userId,
-      String id, String publicLink) {
-    FileInformation fileStorage = new FileInformation();
-    fileStorage.setId(id);
-    fileStorage.setFileName(originalFilename);
-    fileStorage.setDeveloperId(developerId);
-    fileStorage.setUserId(userId);
-    fileStorage.setFileUrl(publicLink);
-    return fileStorage;
-  }
 }
