@@ -1,4 +1,6 @@
 
+[![Build Status](https://travis-ci.org/umasuo/file-service.svg?branch=master)](https://travis-ci.org/umasuo/file-service)
+
 # Commons service
 
 
