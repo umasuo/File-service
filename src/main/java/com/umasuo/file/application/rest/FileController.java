@@ -53,4 +53,22 @@ public class FileController {
 
     return publicLink;
   }
+
+  /**
+   * Upload file for admin.
+   *
+   * @param file the file
+   * @return public link for file
+   * @throws IOException exception when upload file to cloud storage bucket
+   */
+  @PostMapping(Router.ADMIN_FILE_ROOT)
+  public String upload(@RequestParam MultipartFile file) throws IOException {
+    LOG.info("Enter.");
+
+    String publicLink = fileApplication.uploadForAdmin(file);
+
+    LOG.info("Exit. public link: {}.", publicLink);
+
+    return publicLink;
+  }
 }

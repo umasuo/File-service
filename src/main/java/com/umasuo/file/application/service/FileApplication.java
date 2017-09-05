@@ -71,4 +71,23 @@ public class FileApplication {
 
     return publicLink;
   }
+
+  /**
+   * Upload file for admin.
+   *
+   * @param file the file
+   * @return public link for file
+   * @throws IOException exception when upload file to cloud storage bucket
+   */
+  public String uploadForAdmin(MultipartFile file) throws IOException {
+    LOG.debug("Enter.");
+
+    String id = UUID.randomUUID().toString();
+
+    String publicLink = storageApplication.upload(file, id);
+
+    LOG.debug("Exit. public link: {}.", publicLink);
+
+    return publicLink;
+  }
 }
